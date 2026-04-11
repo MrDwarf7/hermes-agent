@@ -271,7 +271,7 @@ Generates shell completion scripts. Includes completions for profile names and p
 
 | Argument | Description |
 |----------|-------------|
-| `<shell>` | Shell to generate completions for: `bash` or `zsh`. |
+| `<shell>` | Shell to generate completions for: `bash`, `zsh`, or `fish`. |
 
 **Examples:**
 
@@ -279,6 +279,7 @@ Generates shell completion scripts. Includes completions for profile names and p
 # Install completions
 hermes completion bash >> ~/.bashrc
 hermes completion zsh >> ~/.zshrc
+hermes completion fish > ~/.config/fish/completions/hermes.fish
 
 # Reload shell
 source ~/.bashrc
