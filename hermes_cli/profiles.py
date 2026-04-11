@@ -1072,6 +1072,85 @@ _hermes "$@"
 '''
 
 
+def generate_fish_completion() -> str:
+    """Generate a fish completion script for hermes profile names."""
+    return '''#!/bin/env fish
+# fish completion for hermes
+
+function __hermes_profiles
+    set -l profiles_dir "$HOME/.hermes/profiles"
+    if test -d "$profiles_dir"
+        ls "$profiles_dir" 2>/dev/null
+    end
+    echo default
+end
+
+function __hermes_needs_command
+    set -l cmd (commandline -opc)
+    # $cmd[1] is 'hermes', skip it
+    if test (count $cmd) -le 1
+        return 0
+    end
+    return 1
+end
+
+function __hermes_using_subcommand
+    set -l cmd (commandline -opc)
+    if test (count $cmd) -lt 2
+        return 1
+    end
+    contains -- $cmd[2] $argv
+end
+
+function __hermes_previous_arg
+    set -l cmd (commandline -opc)
+    if test (count $cmd) -lt 1
+        return 1
+    end
+    contains -- $cmd[-1] $argv
+end
+
+# Remove any pre-existing completions
+complete -c hermes -e
+
+# Top-level subcommands
+complete -c hermes -n __hermes_needs_command -f -a chat -d 'Start an interactive chat session'
+complete -c hermes -n __hermes_needs_command -f -a model -d 'Manage models'
+complete -c hermes -n __hermes_needs_command -f -a gateway -d 'Control the gateway service'
+complete -c hermes -n __hermes_needs_command -f -a setup -d 'Run initial setup'
+complete -c hermes -n __hermes_needs_command -f -a status -d 'Show system status'
+complete -c hermes -n __hermes_needs_command -f -a cron -d 'Manage cron jobs'
+complete -c hermes -n __hermes_needs_command -f -a doctor -d 'Diagnose and fix issues'
+complete -c hermes -n __hermes_needs_command -f -a dump -d 'Dump configuration and state'
+complete -c hermes -n __hermes_needs_command -f -a config -d 'View and edit configuration'
+complete -c hermes -n __hermes_needs_command -f -a skills -d 'Manage agent skills'
+complete -c hermes -n __hermes_needs_command -f -a tools -d 'Manage agent tools'
+complete -c hermes -n __hermes_needs_command -f -a mcp -d 'Manage MCP servers'
+complete -c hermes -n __hermes_needs_command -f -a sessions -d 'Manage conversation sessions'
+complete -c hermes -n __hermes_needs_command -f -a profile -d 'Manage profiles'
+complete -c hermes -n __hermes_needs_command -f -a update -d 'Update hermes'
+complete -c hermes -n __hermes_needs_command -f -a version -d 'Show version'
+
+# -p / --profile flag completes profile names
+complete -c hermes -n '__hermes_previous_arg -p --profile' -f -a "(__hermes_profiles)"
+
+# Profile subcommands
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a list -d 'List all profiles'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a use -d 'Switch to a profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a create -d 'Create a new profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a delete -d 'Delete a profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a show -d 'Show profile details'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a alias -d 'Alias a profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a rename -d 'Rename a profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a export -d 'Export a profile'
+complete -c hermes -n '__hermes_using_subcommand profile; and test (count (commandline -opc)) -eq 2' -f -a import -d 'Import a profile'
+
+# Profile subcommands that take a profile name argument
+complete -c hermes -n '__hermes_using_subcommand use delete show alias rename export' -f -a "(__hermes_profiles)"
+'''
+
+
+
 # ---------------------------------------------------------------------------
 # Profile env resolution (called from _apply_profile_override)
 # ---------------------------------------------------------------------------
