@@ -30,6 +30,7 @@ from hermes_cli.profiles import (
     import_profile,
     generate_bash_completion,
     generate_zsh_completion,
+    generate_fish_completion,
     _get_profiles_root,
     _get_default_hermes_home,
 )
@@ -673,7 +674,7 @@ class TestProfileIsolation:
 # ===================================================================
 
 class TestCompletion:
-    """Tests for bash/zsh completion generators."""
+    """Tests for bash/zsh/fish completion generators."""
 
     def test_bash_completion_contains_complete(self):
         script = generate_bash_completion()
@@ -692,6 +693,20 @@ class TestCompletion:
     def test_zsh_completion_has_hermes_function(self):
         script = generate_zsh_completion()
         assert "_hermes" in script
+
+    def test_fish_completion_has_complete(self):
+        script = generate_fish_completion()
+        assert len(script) > 0
+        assert "complete -c hermes" in script
+
+    def test_fish_completion_has_profiles_function(self):
+        script = generate_fish_completion()
+        assert "__hermes_profiles" in script
+
+    def test_fish_completion_has_subcommand_helpers(self):
+        script = generate_fish_completion()
+        assert "__hermes_needs_command" in script
+        assert "__hermes_using_subcommand" in script
 
 
 # ===================================================================
