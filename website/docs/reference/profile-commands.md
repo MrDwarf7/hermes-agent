@@ -267,7 +267,7 @@ hermes -p work config edit
 hermes completion <shell>
 ```
 
-Generates shell completion scripts. Includes completions for profile names and profile subcommands.
+Generates shell completion scripts. Includes completions for all top-level commands, subcommands (gateway, cron, sessions, skills, etc.), and profile names.
 
 | Argument | Description |
 |----------|-------------|
@@ -286,6 +286,11 @@ source ~/.bashrc
 ```
 
 After installation, tab completion works for:
+- `hermes <TAB>` — all top-level commands
+- `hermes gateway <TAB>` — subcommands (run, start, stop, etc.)
+- `hermes cron <TAB>` — subcommands (list, create, edit, etc.)
+- `hermes sessions <TAB>` — subcommands (list, browse, export, etc.)
+- `hermes skills <TAB>` — subcommands (browse, search, install, etc.)
 - `hermes profile <TAB>` — subcommands (list, use, create, etc.)
 - `hermes profile use <TAB>` — profile names
 - `hermes -p <TAB>` — profile names

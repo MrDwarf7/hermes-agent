@@ -200,7 +200,7 @@ eval "$(hermes completion zsh)"
 hermes completion fish > ~/.config/fish/completions/hermes.fish
 ```
 
-Add the line to your `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/completions/` for persistent completion. Completes profile names after `-p`, profile subcommands, and top-level commands.
+Add the line to your `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/completions/` for persistent completion. Completes all top-level commands, subcommands (gateway, cron, sessions, skills, etc.), and profile names after `-p`.
 
 ## How it works
 

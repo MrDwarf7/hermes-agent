@@ -211,6 +211,12 @@ hermes auth reset PROVIDER  Clear exhaustion status
 ### Other
 
 ```
+hermes dashboard             Start web UI dashboard
+hermes logs [AGENT] [--f]    View and filter log files
+hermes webhook list/add/remove  Webhook subscriptions
+hermes debug share           Upload debug report
+hermes backup                Back up Hermes home
+hermes import FILE           Restore from backup
 hermes insights [--days N]  Usage analytics
 hermes update               Update to latest version
 hermes pairing list/approve/revoke  DM authorization

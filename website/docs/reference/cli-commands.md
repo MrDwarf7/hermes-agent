@@ -834,7 +834,7 @@ hermes -p work chat -q "Hello from work profile"
 hermes completion [bash|zsh|fish]
 ```
 
-Print a shell completion script to stdout. Source the output in your shell profile for tab-completion of Hermes commands, subcommands, and profile names.
+Print a shell completion script to stdout. Source the output in your shell profile for tab-completion of all Hermes commands, subcommands, and profile names.
 
 Examples:
 
